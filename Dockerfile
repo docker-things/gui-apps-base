@@ -1,5 +1,5 @@
 FROM ubuntu:18.04
-MAINTAINER Gabriel Ionescu <gabriel.ionescu@gameloft.com>
+MAINTAINER Gabriel Ionescu <gabi.ionescu+dockerthings@protonmail.com>
 
 # ARGS
 ARG DOCKER_USERID
