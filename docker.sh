@@ -22,7 +22,7 @@ cd "$(get_script_dir)"
 # Load the config
 . config.sh
 
-# Make sure there's a tag 
+# Make sure there's a tag
 if [[ $PROJECT_NAME != *":"* ]]; then
     PROJECT_NAME="${PROJECT_NAME}:latest"
 fi
@@ -122,6 +122,34 @@ function scriptBuild() {
 
 }
 
+function buildRuntimeVolumeDirs() {
+    nextIsVolume=0
+
+    # Go through args
+    for runArg in ${RUN_ARGS[@]}; do
+
+        # If found '-v' the next arg contains the path
+        if [ "$runArg" == "-v" ]; then
+            nextIsVolume=1
+            continue
+        fi
+
+        # If we've got a path
+        if [ $nextIsVolume -eq 1 ]; then
+            nextIsVolume=0
+
+            # Host path
+            hostPath="`echo $runArg | awk -F':' '{print $1}'`"
+
+            # If the path doesn't exist
+            if [ ! -f "$hostPath" -a ! -d "$hostPath" ]; then
+                showYellow "Creating dir: $hostPath"
+                mkdir -p "$hostPath"
+            fi
+        fi
+    done
+}
+
 function getStartCommand() {
     TMP_NAME="`echo "$PROJECT_NAME" | awk -F':' '{print $1}'`"
     echo "$DOCKER_CMD run ${RUN_ARGS[@]} --name=\"$TMP_NAME\" \"$TMP_NAME\""
@@ -130,7 +158,12 @@ function getStartCommand() {
 # Start the docker image
 function scriptStart() {
     showGreen "\nStarting $PROJECT_NAME..."
+    buildRuntimeVolumeDirs
     COMMAND="$(getStartCommand)"
+    if [ "$2" == "command" ]; then
+        echo "$COMMAND"
+        exit
+    fi
     eval $COMMAND
     exit $?
 }
