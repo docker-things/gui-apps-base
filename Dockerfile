@@ -54,6 +54,10 @@ RUN echo "\n > CREATE USER\n" \
  && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
  && echo $TZ > /etc/timezone \
  \
+ && echo "\n > GTK3\n" \
+ && apt-get install -y --no-install-recommends \
+        libgtk-3-0 \
+ \
  && echo "\n > THEME\n" \
  && apt-get install -y --no-install-recommends \
         gtk2-engines-murrine \
