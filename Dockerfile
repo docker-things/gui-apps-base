@@ -92,5 +92,12 @@ RUN echo "\n > CREATE USER\n" \
  && echo "\n > FIX PERMISSIONS\n" \
  && chown $DOCKER_USERID:$DOCKER_GROUPID -R /home/$DOCKER_USERNAME
 
+# ADD FIFO
+COPY install/fifo/xdg-open /usr/bin/xdg-open
+COPY install/fifo/notify-send /usr/bin/notify-send
+RUN chmod +x \
+        /usr/bin/xdg-open \
+        /usr/bin/notify-send
+
 # UNSET NONINTERACTIVE
 ENV DEBIAN_FRONTEND ""
