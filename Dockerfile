@@ -89,8 +89,11 @@ RUN echo "\n > CREATE USER\n" \
  && apt-get autoremove -y \
  && rm -f /var/cache/apt/archives/*.deb \
  \
- && echo "\n > FIX PERMISSIONS\n" \
- && chown $DOCKER_USERID:$DOCKER_GROUPID -R /home/$DOCKER_USERNAME
+ && echo "\n > MAKE SURE BUS IS \n" \
+ && chown $DOCKER_USERID:$DOCKER_GROUPID -R /home/$DOCKER_USERNAME \
+ \
+ && echo "\n > FIX DBUS\n" \
+ && mkdir -p /var/run/dbus
 
 # ADD FIFO
 COPY install/fifo/xdg-open /usr/bin/xdg-open
