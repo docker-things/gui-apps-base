@@ -81,6 +81,10 @@ RUN echo "\n > CREATE USER\n" \
  && apt-get install -y --no-install-recommends \
         pcmanfm \
  \
+ && echo "\n > XDG-UTILS\n" \
+ && apt-get install -y --no-install-recommends \
+        xdg-utils \
+ \
  && echo "\n > CLEANUP\n" \
  && apt-get remove -y \
         software-properties-common \
@@ -93,7 +97,9 @@ RUN echo "\n > CREATE USER\n" \
  && chown $DOCKER_USERID:$DOCKER_GROUPID -R /home/$DOCKER_USERNAME \
  \
  && echo "\n > FIX DBUS\n" \
- && mkdir -p /var/run/dbus
+ && mkdir -p /var/run/dbus \
+ \
+ && echo "\n > OVERWRITE BINARIES\n"
 
 # ADD FIFO
 COPY install/fifo/xdg-open /usr/bin/xdg-open
