@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 MAINTAINER Gabriel Ionescu <gabi.ionescu+dockerthings@protonmail.com>
 
 # ARGS
@@ -54,6 +54,10 @@ RUN echo "\n > CREATE USER\n" \
  && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
  && echo $TZ > /etc/timezone \
  \
+ && echo "\n > LIBNOTIFY\n" \
+ && apt-get install -y --no-install-recommends \
+        libnotify-bin \
+ \
  && echo "\n > GTK3\n" \
  && apt-get install -y --no-install-recommends \
         libgtk-3-0 \
@@ -62,16 +66,8 @@ RUN echo "\n > CREATE USER\n" \
  && apt-get install -y --no-install-recommends \
         gtk2-engines-murrine \
         gtk2-engines-pixbuf \
-        ubuntu-mate-themes \
- \
- && echo "\n > ELEMENTARY ICONS\n" \
- && apt-get install -y --no-install-recommends \
-        software-properties-common \
-        libnotify-bin \
- && add-apt-repository ppa:elementary-add-team/icons \
- && apt-get update \
- && apt-get install -y --no-install-recommends \
-        elementary-add-icon-theme \
+        gnome-themes-ubuntu \
+        yaru-theme-icon \
  \
  && echo "\n > DBUS\n" \
  && apt-get install -y --no-install-recommends \
@@ -79,15 +75,13 @@ RUN echo "\n > CREATE USER\n" \
  \
  && echo "\n > FILE MANAGER\n" \
  && apt-get install -y --no-install-recommends \
-        pcmanfm \
+        nautilus \
  \
  && echo "\n > XDG-UTILS\n" \
  && apt-get install -y --no-install-recommends \
         xdg-utils \
  \
  && echo "\n > CLEANUP\n" \
- && apt-get remove -y \
-        software-properties-common \
  && apt-get clean -y \
  && apt-get autoclean -y \
  && apt-get autoremove -y \

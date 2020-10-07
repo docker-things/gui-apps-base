@@ -10,7 +10,7 @@ BACKUP_PATH=""
 FIFO_PATH="/tmp/docker-things/fifo"
 
 # The name of the docker image
-PROJECT_NAME="gui-apps-base:18.04"
+PROJECT_NAME="gui-apps-base:20.04"
 
 # BUILD ARGS
 BUILD_ARGS=(
